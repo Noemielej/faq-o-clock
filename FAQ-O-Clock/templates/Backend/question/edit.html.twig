@@ -1,0 +1,19 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}Modifier votre question{% endblock %}
+
+{% block body %}
+    <h2>Modifier votre question</h2>
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ include('Backend/question/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+    <a class="btn btn-secondary" href ="{{ path('backend_question_index') }}">Retour à la liste</a>
+
+    {{ include('Backend/question/_delete_form.html.twig') }}
+{% endblock %}

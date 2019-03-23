@@ -1,0 +1,80 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}Question{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if question %}
+    <h2 class="mb-1">{{ question.title }}</h2>
+
+    <div class="list-group mt-5">
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1">{{ question.body }}</p>
+                <!-- Si l'utilisateur connecté est un modérateur alors le bouton bloqué s'affiche -->
+                {% if is_granted('ROLE_MODERATOR') %}
+                <a href ="#">
+                    <i class="fas fa-times-circle"></i>
+                </a>
+                {% endif %}
+            </div>
+            <div class="d-flex w-100 justify-content-between">
+                <small>posté par {{ question.author }}</small>
+                <small>le {{ question.createdAt ? question.createdAt|date('Y-m-d') : '' }}</small>
+            </div>
+        </div>
+    {% else %}
+        <p colspan="6">no records found</p>
+    {% endif %}
+    </div>
+
+    <h2>Les réponses</h2>
+
+    {% for currentAnswer in question.answers %}
+        <div class="list-group mt-5">
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4 class="mb-1">{{ currentAnswer.title }}</h4>
+                    <!-- Si l'utilisateur connecté est un modérateur alors le bouton bloqué s'affiche -->
+                    {% if is_granted('ROLE_MODERATOR')%}
+                        <a href ="#">
+                            <i class="fas fa-times-circle"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="d-flex w-100 justify-content-end">
+                    <a href =""><i class="fas fa-thumbs-up"></i></a>
+                    {% if is_granted('ROLE_USER' == app.user.role.code ) %}
+                        <a class="btn btn-success" href ="#">Approuvé</a>
+                    {% endif %}
+                </div>
+
+                <p class="mb-1">{{ currentAnswer.body }}</p>
+                <div class="d-flex w-100 justify-content-between">
+                    <small>posté par {{ currentAnswer.author }}</small>
+                    <small>le {{ currentAnswer.createdAt ? currentAnswer.createdAt|date('Y-m-d') : '' }}</small>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p colspan="6">Il n'y a pas encore de réponse proposé.</p>
+    {% endfor %}
+
+    {# Si utilisateur est connecté alors le formulaire de réponse est disponible #}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h3>Vous souhaitez répondre à cette question :</h3>
+
+        {{ include('Backend/answer/_form.html.twig') }}
+
+    {% endif %}
+
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-secondary" href ="{{ path('backend_question_index') }}">Retour</a>
+    </div>
+{% endblock %}

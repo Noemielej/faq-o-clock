@@ -1,0 +1,21 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}Modifier votre réponse{% endblock %}
+
+{% block body %}
+    <h2>Modifier votre réponse</h2>
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ include('Backend/answer/_form.html.twig', {'button_label': 'Valider'}) }}
+
+    {{ include('Backend/answer/_delete_form.html.twig') }}
+
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-secondary" href ="{{ path('backend_answer_index') }}">Retour</a>
+    </div>
+{% endblock %}

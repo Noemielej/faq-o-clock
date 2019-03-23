@@ -1,0 +1,28 @@
+easy_admin:
+    site_name: 'FAQ-O-Clock'
+    design:
+        brand_color: '#17a2b8'
+        menu:
+            - { label : 'Retour au site', route: 'backend_question_index'}
+            - { entity: Questions, label: Questions }
+            - { entity: Réponses, label: Réponses }
+            - { entity: Tag, label: Tag }
+            - { entity: Utilisateurs, label: Utilisateurs }
+    list:
+         actions: ['show']
+    # List the entity class name you want to manage
+    entities:
+        Utilisateurs:
+            class: App\Entity\User
+            list:
+                fields:
+                    - id
+                    - username
+                    - role
+                    - { property: 'email', label: 'Contact' }
+        Questions:
+            class: App\Entity\Question
+        Réponses:
+            class: App\Entity\Answer
+        Tag:
+            class: App\Entity\Tag

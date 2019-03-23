@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}" >
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Merienda:400,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Bowlby+One" rel="stylesheet">
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+
+        <header >
+            <div class="container">
+            <h1 class="p-5">FAQ-O-Clock</h1>
+
+            <nav>
+                <ul class="nav nav-pills nav-fill">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('backend_question_index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('backend_tag_index') }}">Tags</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}">Déconnection</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('homepage') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('tag_index') }}">Tags</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('backend_user_new') }}">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
+
+            {% block nav %}{% endblock %}
+
+        </div>
+        </header>
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <div class="d-flex justify-content-end">
+                            <p class="badge badge-info p-2">Bonjour: {{ app.user.username }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% block body %}{% endblock %}
+                </div>
+
+            </div>
+            {# On n'affiche le lien « Ajouter une annonce » qu'aux auteurs
+              (et admins, qui héritent du rôle auteur) #}
+
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <ul class="nav nav-pills  justify-content-end mt-5">
+                <li class="nav-item">
+                    <a class="nav-link btn-info" href="{{ path('admin_tag_index') }}">Admin Tags</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-info" href="{{ path('admin_user_index') }}">Admin User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn-info" href="{{ path('admin') }}">Page Admin</a>
+                </li>
+            </ul>
+            {% endif %}
+            <hr>
+
+        <footer class="container m-3 d-flex justify-content-center">
+
+            {% block footer %}
+               Made with &hearts; by Noémie
+            {% endblock %}
+        </footer>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

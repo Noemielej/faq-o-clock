@@ -1,0 +1,56 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h2>Mon Profil</h2>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-info" href="{{ path('backend_user_edit', {'id': user.id}) }}">Modifier Votre Profil</a>
+    </div>
+
+    <h3>Vos questions posés</h3>
+    {% for currentUser in user.questions %}
+        <div class="list-group mt-5">
+            <a href="{{ path('backend_question_show', {'id': currentUser.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <h4>{{ currentUser.title }}</h4>
+                <p class="mb-1">{{ currentUser.body }}</p>
+                <div class="d-flex w-100 justify-content-between">
+                    <small>le {{ currentUser.createdAt ? currentUser.createdAt|date('Y-m-d') : '' }}</small>
+                </div>
+            </a>
+        </div>
+    {% else %}
+        <p colspan="6">Pas de questions posés</p>
+    {% endfor %}
+
+    <h3>Vos Réponses proposés</h3>
+
+    {% for currentUser in user.answers %}
+        <div class="list-group mt-5">
+            <a href="{{ path('backend_answer_show', {'id': currentUser.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <h4>{{ currentUser.title }}</h4>
+                <p class="mb-1">{{ currentUser.body }}</p>
+                <div class="d-flex w-100 justify-content-between">
+                    <small>le {{ currentUser.createdAt ? currentUser.createdAt|date('Y-m-d') : '' }}</small>
+                </div>
+            </a>
+        </div>
+    {% else %}
+        <p colspan="6">Pas de questions posés</p>
+    {% endfor %}
+
+
+{% endblock %}

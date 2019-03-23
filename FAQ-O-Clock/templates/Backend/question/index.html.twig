@@ -1,0 +1,44 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+    <h2>Bienvenue</h2>
+
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for question in questions %}
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1">
+                    <a href="{{ path('backend_question_show', {'id': question.id}) }}">
+                        {{ question.title }}
+                    </a>
+                </h4>
+                <small>
+                    le {{ question.createdAt ? question.createdAt|date('Y-m-d') : '' }}
+                </small>
+            </div>
+            <p class="mb-1">{{ question.body }}</p>
+            <div class="d-flex w-100 justify-content-between">
+                <small>posté par {{ question.author }}</small>
+
+                {% if is_granted('ROLE_MODERATOR') %}
+                    <a href ="#">
+                        <i class="fas fa-times-circle"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% else %}
+            <p colspan="6">no records found</p>h2
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

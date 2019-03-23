@@ -1,0 +1,58 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        faq_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            # j'autorise les utilisateurs anonyme à consulter une partie de l'application
+            anonymous: true
+            http_basic: true
+            provider: faq_provider
+
+            form_login:
+                # route de l'affichage de la page de login
+                login_path: login
+                # route verification du login
+                check_path: login
+                # url de redirection apres login
+                default_target_path: /backend/question
+
+            logout:
+                # url logout
+                path:   /logout
+                # url de redirection apres logout
+                target: /
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # exemple de pattern url avec portion variable sur une suite d'entier
+        #- { path: '^/backend/movie/[0-9]{0,10}/edit', roles: ROLE_USER }
+        #
+        - { path: '^/admin/tag', roles: ROLE_MODERATOR }
+        - { path: ^/admin, roles: ROLE_ADMINISTRATOR }
+        - { path: '^/admin/user', roles: ROLE_ADMINISTRATOR}
+        - { path: '^/backend/user/[0-9]', roles: ROLE_USER}
+        - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY}
+
+    role_hierarchy:
+        #role de la clef contient l'autre role
+        ROLE_MODERATOR: ROLE_USER
+        ROLE_ADMINISTRATOR: [ROLE_USER, ROLE_MODERATOR]

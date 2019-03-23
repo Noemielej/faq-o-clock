@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tag{% endblock %}
+
+{% block body %}
+    <h2 class="mt-5" >Tags disponible</h2>
+
+    <div class="list-group mt-5">
+
+        {% for tag in tags %}
+            <a href="{{ path('tag_show', {'id': tag.id}) }}">
+                <h4>{{ tag.name}}</h4>
+            </a>
+        {% else %}
+            <p colspan="6">no records found</p>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

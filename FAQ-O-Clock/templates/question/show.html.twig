@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}show question{% endblock %}
+
+{% block body %}
+
+{% if question %}
+    <h2 class="mb-1">{{ question.title }}</h2>
+    <div class="list-group mt-5">
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <small>le {{ question.createdAt ? question.createdAt|date('Y-m-d') : '' }}</small>
+            </div>
+            <p class="mb-1">{{ question.body }}</p>
+            <small>posté par {{ question.author }}</small>
+        </div>
+{% else %}
+    <p colspan="6">no records found</p>
+{% endif %}
+    </div>
+
+<h2>Les réponses</h2>
+{% for currentAnswer in question.answers %}
+    <div class="list-group mt-5">
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+            <h4 class="mb-1">{{ currentAnswer.title }}</h4>
+            <p class="mb-1">{{ currentAnswer.body }}</p>
+            <div class="d-flex w-100 justify-content-between">
+                <small>posté par {{ currentAnswer.author }}</small>
+                <small>le {{ currentAnswer.createdAt ? currentAnswer.createdAt|date('Y-m-d') : '' }}</small>
+            </div>
+        </div>
+    </div>
+{% else %}
+
+    <p colspan="6">Il n'y a pas encore de réponse proposé.</p>
+
+{% endfor %}
+
+<div class="d-flex justify-content-end">
+    <a class="btn btn-secondary" href ="{{ path('homepage') }}">Retour</a>
+</div>
+
+{% endblock %}

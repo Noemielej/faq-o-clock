@@ -1,0 +1,12 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}New Question{% endblock %}
+
+{% block body %}
+    <h2>Poser une question</h2>
+
+    {{ include('Backend/question/_form.html.twig') }}
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-secondary" href="{{ path('backend_question_index') }}">Retour</a>
+    </div>
+{% endblock %}

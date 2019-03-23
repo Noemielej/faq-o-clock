@@ -1,0 +1,26 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}Tag{% endblock %}
+
+{% block body %}
+    <h2>{{ tag.name }}</h2>
+
+    {% for currentTag in tag.question %}
+        <div class="list-group mt-5">
+            <a href="{{ path('backend_question_show', {'id': currentTag.id}) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <h4>{{ currentTag.title }}</h4>
+                <p class="mb-1">{{ currentTag.body }}</p>
+                <div class="d-flex w-100 justify-content-between">
+                    <small>posté par {{ currentTag.author }}</small>
+                    <small>le {{ currentTag.createdAt ? currentTag.createdAt|date('Y-m-d') : '' }}</small>
+                </div>
+            </a>
+        </div>
+    {% else %}
+        <p colspan="6">Il n'y a pas de questions associées</p>
+    {% endfor %}
+    <div class="d-flex justify-content-end">
+        <a  class="btn btn-secondary" href="{{ path('backend_tag_index') }}">Retour</a>
+    </div>
+
+{% endblock %}

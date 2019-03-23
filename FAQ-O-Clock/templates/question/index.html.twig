@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+    <h2 class="mt-5" >Bienvenue</h2>
+
+    <div class="list-group mt-5">
+
+        {% for question in questions %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h3 class="mb-1"><a href="{{ path('question_show', {'id': question.id}) }}">{{ question.title }}</a></h3>
+                    <small>le {{ question.createdAt ? question.createdAt|date('Y-m-d') : '' }}</small>
+                </div>
+                <p class="mb-1">{{ question.body }}</p>
+                <small>posté par {{ question.author }}</small>
+            </div>
+        {% else %}
+            <p colspan="6">no records found</p>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

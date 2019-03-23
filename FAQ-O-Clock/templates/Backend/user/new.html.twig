@@ -1,0 +1,16 @@
+{% extends 'Backend/backend_layout.html.twig' %}
+
+{% block title %}Nouvel utilisateur{% endblock %}
+
+{% block body %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h2>Créer un nouvel utilisateur</h2>
+    {% else %}
+        <h2>Inscription</h2>
+    {% endif %}
+
+    {{ include('Backend/user/_form.html.twig') }}
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-secondary" href ="{{ path('backend_user_index') }}">Retour</a>
+    </div>
+{% endblock %}

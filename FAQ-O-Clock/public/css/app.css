@@ -1,0 +1,43 @@
+/* font-family: 'Merienda', cursive; */
+/* font-family: 'Bowlby One', cursive; */
+
+body {
+  background-color: lightgrey;
+}
+
+header{
+  background-image:url('../images/images.jpeg');
+  /*opacity: 0.33; */
+  background-repeat: repeat;
+}
+
+h1{
+  text-align: center;
+  font-family: 'Bowlby One', cursive;
+  font-size: 4rem;
+  font-weight: bold;
+  color:#808080;
+}
+
+h2{
+  font-family: 'Bowlby One', cursive;
+  margin: 4rem 0 4rem 0;
+}
+
+h3{
+  font-family: 'Bowlby One', cursive;
+  margin: 4rem 0 4rem 0;
+}
+
+h4{
+  font-family: 'Bowlby One', cursive;
+
+}
+nav{
+  background-color: grey;
+}
+ nav a {
+   color: black;
+   font-size: 1.5rem;
+
+ }
